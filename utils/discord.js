@@ -7,6 +7,7 @@ let contentType = {
     'Content-Type': 'application/json'
 }
 
+let cache = [];
 let guid = process.env.GUILD_ID
 
 const createChannel = async (name, parentId) => {
@@ -32,10 +33,18 @@ const createChannel = async (name, parentId) => {
 
 const channelExist = async (name) => {
     let url = `${base}/guilds/${guid}/channels`
-    let response = await axios.get(url, {
-        headers: auth
-    });
-    return response.data.find(c => c.name.toLowerCase().includes(name))
+    found = cache.find(c => c.name.toLowerCase().includes(name))
+    if (found) {
+        console.log(`Found from Cache ${name}`);
+        return found;
+    } else {
+        let response = await axios.get(url, {
+            headers: auth
+        });
+        cache = response.data;
+        console.log(`Found from API ${name}`);
+        return response.data.find(c => c.name.toLowerCase().includes(name))
+    }
 }
 const getCategory = async (cateogry) => {
     let url = `${base}/guilds/${guid}/channels`
