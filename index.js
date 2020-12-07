@@ -1,5 +1,6 @@
 const discord = require("./utils/discord")
 const htb = require("./utils/htb")
+let cateogry = process.env.CATEOGRY || "box"
 
 const createChannels = async (category, name) => {
   let hintChannel = await discord.createChannel(`${name}-hints`, category.id)
@@ -10,7 +11,7 @@ const createChannels = async (category, name) => {
 
 async function main() {
     let boxes = await htb.getBoxes();
-    let category = await discord.getCategory()
+    let category = await discord.getCategory(cateogry)
     let boxNames = boxes.map((x)=>x.name.toLowerCase())
     boxNames.map((name)=>createChannels(category,name))
 

@@ -7,7 +7,6 @@ let contentType = {
     'Content-Type': 'application/json'
 }
 
-let cateogry = process.env.CATEOGRY || "box"
 let guid = process.env.GUILD_ID
 
 const createChannel = async (name, parentId) => {
@@ -38,7 +37,7 @@ const channelExist = async (name) => {
     });
     return response.data.find(c => c.name.toLowerCase().includes(name))
 }
-const getCategory = async () => {
+const getCategory = async (cateogry) => {
     let url = `${base}/guilds/${guid}/channels`
     let response = await axios.get(url, {
         headers: auth
