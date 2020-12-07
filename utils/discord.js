@@ -42,7 +42,7 @@ const getCategory = async (cateogry) => {
     let response = await axios.get(url, {
         headers: auth
     });
-    return response.data.filter(x => x.type == 4).find(c => c.name.toLowerCase().includes(cateogry))
+    return response.data.filter(x => x.type == 4).find(c => c.name.toLowerCase().includes(cateogry.toLowerCase()))
 }
 
 
