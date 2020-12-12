@@ -11,7 +11,6 @@ const getBoxes = async () => {
 }
 //
 // curl --location --request GET 'https://www.hackthebox.eu/api/startingpoint/machines' \
-// --header 'Authorization: Bearer ***REMOVED***'
 const getStartingPointBox = async () => {
     let url = `${base}/startingpoint/machines`
     let headers = {
