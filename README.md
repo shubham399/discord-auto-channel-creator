@@ -4,6 +4,8 @@ A repo to automatically create a channel using github workflow.
 
 This Repo is used to create Channels automatically using github actions.
 
+![build pass](https://github.com/shubham399/discord-auto-channel-creator/workflows/Create%20New%20Box%20Channels/badge.svg)
+
 
 Fork the repo.
 
