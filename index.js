@@ -14,7 +14,7 @@ const createChannels = async (category, name) => {
 }
 
 const archiveChannels  = async (permission,channel,parentId) => {
- let archiveChannel = await discord.updateChannel(permission,channel.id, parentId)
+ let archiveChannel = await discord.updateChannel(channel.id, parentId,permission)
  console.log("Archived Created:", archiveChannel.name);
 }
 

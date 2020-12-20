@@ -10,7 +10,7 @@ let contentType = {
 let cache = [];
 let guid = process.env.GUILD_ID
 
-const createChannel = async (name, parentId) => {
+const createChannel = async (name, parentId=null) => {
     name = name.replace(/\s/g, "-").toLowerCase();
     isExist = await channelExist(name, parentId)
     if (!isExist) {
@@ -31,7 +31,7 @@ const createChannel = async (name, parentId) => {
     }
 }
 
-const updateChannel = async (permission, channelId, parentId) => {
+const updateChannel = async (channelId, parentId=null,permission=null) => {
     let url = `${base}/channels/${channelId}`
     let data = {
         "parent_id": parentId,

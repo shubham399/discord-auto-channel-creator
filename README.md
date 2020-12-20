@@ -12,30 +12,36 @@ Fork the repo.
 
 Modify `.github/workflow/create-channels.yml` with timestamp when the channel has to be created.
 
+Set and `BOT_TOKEN` env
 
-If we want to create a channel in a specific Category.
+### Available Function
 
-
-You can call 
-
+#### Get Category
 ```js
-const createChannels = async (category, name) => {
-  let channel = await discord.createChannel(`${name}`, category.id)
-  console.log("Channel Created:", channel.name);
-}
+let category = await getCategory(categoryName)
 ```
 
+This function will get Category from the name
 
-where you pass the `category` object and `name` of the channel.
+Note: This will use `include` instead of equal comparison
 
-You can get the category using
+
+#### Create Channel
 
 ```js
-    let category = await discord.getCategory(cateogry)
+let newChannel = await createChannel(name, parentId=null)
 ```
 
-Modify these values. and you should be done.
+This function will create a discord channel
 
-In the Repo Setting,
+#### Update Channel
 
-Set an Secret as `BOT_TOKEN` which is the Discord Bot token.
+```js
+let channel = await updateChannel(channelId, parentId=null,permission=null)
+```
+
+#### Get Channels in a Category
+
+```js
+let channels = await getChannelsInCategory(categoryId)
+```
