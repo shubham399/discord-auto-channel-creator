@@ -31,10 +31,11 @@ const createChannel = async (name, parentId) => {
     }
 }
 
-const updateChannel = async (channelId, parentId) => {
+const updateChannel = async (permission,channelId, parentId) => {
     let url = `${base}/channels/${channelId}`
     let data = {
-        "parent_id": parentId
+        "parent_id": parentId,
+        "permission_overwrites":permission
     }
     let headers = Object.assign(auth, contentType)
     let response = await axios.patch(url, JSON.stringify(data), {

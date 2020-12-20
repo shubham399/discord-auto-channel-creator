@@ -13,8 +13,8 @@ const createChannels = async (category, name) => {
   console.log("Channel Created:", channel.name);
 }
 
-const archiveChannels  = async (channel,parentId) => {
- let archiveChannel = await discord.updateChannel(channel.id, parentId)
+const archiveChannels  = async (permission,channel,parentId) => {
+ let archiveChannel = await discord.updateChannel(permission,channel.id, parentId)
  console.log("Archived Created:", archiveChannel.name);
 }
 
@@ -30,7 +30,8 @@ async function main() {
     let archivingChannel = notPresentBox.map(x=> channels.filter(y=> y.name.includes(x))).flat()
     // Archive Channel
     let archiveCategory = await discord.getCategory('archive')
-    archivingChannel.map(channel=> archiveChannels(channel,archiveCategory.id) )
+    let archivePermission = archiveCategory.permission_overwrites
+    archivingChannel.map(channel=> archiveChannels(archivePermission,channel,archiveCategory.id) )
     // Create Box name
     boxNames.map((name)=>createChannelsWithHint(category,name))
     // Create StartingPoint
