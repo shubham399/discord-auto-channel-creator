@@ -12,7 +12,7 @@ let guid = process.env.GUILD_ID
 
 const createChannel = async (name, parentId) => {
     name = name.replace(/\s/g, "-").toLowerCase();
-    isExist = await channelExist(name)
+    isExist = await channelExist(name, parentId)
     if (!isExist) {
         let url = `${base}/guilds/${guid}/channels`
         let data = {
@@ -31,11 +31,11 @@ const createChannel = async (name, parentId) => {
     }
 }
 
-const updateChannel = async (permission,channelId, parentId) => {
+const updateChannel = async (permission, channelId, parentId) => {
     let url = `${base}/channels/${channelId}`
     let data = {
         "parent_id": parentId,
-        "permission_overwrites":permission
+        "permission_overwrites": permission
     }
     let headers = Object.assign(auth, contentType)
     let response = await axios.patch(url, JSON.stringify(data), {
@@ -44,19 +44,17 @@ const updateChannel = async (permission,channelId, parentId) => {
     return response.data
 }
 
-const channelExist = async (name) => {
+const channelExist = async (name, parentId) => {
     let url = `${base}/guilds/${guid}/channels`
     found = cache.find(c => c.name.toLowerCase().includes(name))
     if (found) {
         console.log(`Found from Cache ${name}`);
         return found;
     } else {
-        let response = await axios.get(url, {
-            headers: auth
-        });
-        cache = response.data;
+        let response = await getChannelsInCategory(parentId)
+        cache = response
         console.log(`Found from API ${name}`);
-        return response.data.find(c => c.name.toLowerCase().includes(name))
+        return response.find(c => c.name.toLowerCase().includes(name))
     }
 }
 
@@ -67,6 +65,7 @@ const getChannelsInCategory = async (parentId) => {
     });
     return response.data.filter(c => c.parent_id == parentId)
 }
+
 const getCategory = async (cateogry) => {
     let url = `${base}/guilds/${guid}/channels`
     let response = await axios.get(url, {
