@@ -31,6 +31,18 @@ const createChannel = async (name, parentId) => {
     }
 }
 
+const updateChannel = async (channelId, parentId) => {
+    let url = `${base}/channels/${channelId}`
+    let data = {
+        "parent_id": parentId
+    }
+    let headers = Object.assign(auth, contentType)
+    let response = await axios.patch(url, JSON.stringify(data), {
+        headers
+    })
+    return response.data
+}
+
 const channelExist = async (name) => {
     let url = `${base}/guilds/${guid}/channels`
     found = cache.find(c => c.name.toLowerCase().includes(name))
@@ -46,6 +58,14 @@ const channelExist = async (name) => {
         return response.data.find(c => c.name.toLowerCase().includes(name))
     }
 }
+
+const getChannelsInCategory = async (parentId) => {
+    let url = `${base}/guilds/${guid}/channels`
+    let response = await axios.get(url, {
+        headers: auth
+    });
+    return response.data.filter(c => c.parent_id == parentId)
+}
 const getCategory = async (cateogry) => {
     let url = `${base}/guilds/${guid}/channels`
     let response = await axios.get(url, {
@@ -57,3 +77,5 @@ const getCategory = async (cateogry) => {
 
 exports.getCategory = getCategory;
 exports.createChannel = createChannel;
+exports.getChannelsInCategory = getChannelsInCategory;
+exports.updateChannel = updateChannel;
