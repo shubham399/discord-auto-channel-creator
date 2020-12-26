@@ -78,7 +78,7 @@ const getCategory = async (cateogry) => {
 const deleteChannel = async (channelId) =>{
     let url = `${base}/channels/${channelId}`
     let headers = Object.assign(auth, contentType)
-    let response = await axios.delete(url, JSON.stringify(data), {
+    let response = await axios.delete(url,{
         headers
     })
     return response.data
