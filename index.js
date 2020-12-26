@@ -18,10 +18,15 @@ const archiveChannels  = async (permission,channel,parentId) => {
  console.log("Archived Created:", archiveChannel.name);
 }
 
+const deleteChannels = async (channel)=>{
+     await discord.deleteChannel(channel.id)
+     console.log("Deleted Channel", channel.name);
+}
+
 async function main() {
     let boxes = await htb.getBoxes();
     let category = await discord.getCategory(cateogry)
-    let channels = await discord.getChannelsInCategory(category.id)
+    let channels = await discord.getChannelsInCategory(category.id);
     let channelsName = channels.map(x=>x.name.toLowerCase()).map(x=>x.split('-')[0]).filter(x=>x !='request')
     let uniqueChannels = [...new Set([...channelsName])];
     let boxNames = boxes.map((x)=>x.name.toLowerCase())
@@ -30,6 +35,9 @@ async function main() {
     let archivingChannel = notPresentBox.map(x=> channels.filter(y=> y.name.includes(x))).flat()
     // Archive Channel
     let archiveCategory = await discord.getCategory('archive')
+    let archedChannels  = await discord.getChannelsInCategory(archiveCategory.id);
+    let deteteableChannel = archedChannels.slice(0,2);
+    deteteableChannel.map(deleteChannels);
     let archivePermission = archiveCategory.permission_overwrites
     archivingChannel.map(channel=> archiveChannels(archivePermission,channel,archiveCategory.id) )
     // Create Box name
