@@ -6,7 +6,7 @@ name: Create New Box Channels
 on:
   schedule:
     # Runs every hour
-    - cron: '2 15 * * SAT'
+    - cron: '2 20 * * SAT'
   workflow_dispatch:
 jobs:
   build:
