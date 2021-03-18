@@ -7,6 +7,11 @@ This Repo is used to create Channels automatically using github actions.
 ![build pass](https://github.com/shubham399/discord-auto-channel-creator/workflows/Create%20New%20Box%20Channels/badge.svg)
 
 
+Open in
+
+[![Open in Cloud Shell](https://user-images.githubusercontent.com/27065646/92304704-8d146d80-ef80-11ea-8c29-0deaabb1c702.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/shubham399/discord-auto-channel-creator&tutorial=README.md)
+
+
 Fork the repo.
 
 
