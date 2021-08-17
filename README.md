@@ -50,5 +50,3 @@ let channel = await updateChannel(channelId, parentId=null,permission=null)
 ```js
 let channels = await getChannelsInCategory(categoryId)
 ```
-
-.
