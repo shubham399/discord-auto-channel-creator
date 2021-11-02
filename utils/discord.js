@@ -1,4 +1,11 @@
 const axios = require("axios")
+const axiosRetry = require("axios-retry")
+const retryOpts = {
+    retries: 3,
+    retryDelay: axiosRetry.exponentialDelay,
+    retryCondition: (error) => !error.response && error.response === 429
+}
+axiosRetry(axios, retryOpts)
 const base = "https://discord.com/api/v8"
 let auth = {
     "Authorization": `Bot ${process.env.BOT_TOKEN}`
