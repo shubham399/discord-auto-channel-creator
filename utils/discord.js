@@ -5,7 +5,6 @@ const retryOpts = {
     retryDelay: axiosRetry.exponentialDelay,
     retryCondition: (error) => !error.response && error.response === 429
 }
-axiosRetry(axios, retryOpts)
 const base = "https://discord.com/api/v8"
 let auth = {
     "Authorization": `Bot ${process.env.BOT_TOKEN}`
@@ -30,6 +29,7 @@ const createChannel = async (name, parentId = null) => {
                 "lockPermissions": true
             }
             let headers = Object.assign(auth, contentType)
+            axiosRetry(axios, retryOpts)
             let response = await axios.post(url, JSON.stringify(data), {
                 headers
             })
@@ -45,6 +45,7 @@ const createChannel = async (name, parentId = null) => {
 
 const updateChannel = async (channelId, parentId = null, permission = null) => {
     try {
+        axiosRetry(axios, retryOpts)
         let url = `${base}/channels/${channelId}`
         let data = {
             "parent_id": parentId,
@@ -63,6 +64,7 @@ const updateChannel = async (channelId, parentId = null, permission = null) => {
 
 const channelExist = async (name, parentId) => {
     try {
+        axiosRetry(axios, retryOpts)
         let url = `${base}/guilds/${guid}/channels`
         found = cache.find(c => c.name.toLowerCase().includes(name))
         if (found) {
@@ -82,6 +84,7 @@ const channelExist = async (name, parentId) => {
 
 const getChannelsInCategory = async (parentId) => {
     try {
+        axiosRetry(axios, retryOpts)
         let url = `${base}/guilds/${guid}/channels`
         let response = await axios.get(url, {
             headers: auth
@@ -95,6 +98,7 @@ const getChannelsInCategory = async (parentId) => {
 
 const getCategory = async (cateogry) => {
     try {
+        axiosRetry(axios, retryOpts)
         let url = `${base}/guilds/${guid}/channels`
         let response = await axios.get(url, {
             headers: auth
@@ -108,6 +112,7 @@ const getCategory = async (cateogry) => {
 
 const deleteChannel = async (channelId) => {
     try {
+        axiosRetry(axios, retryOpts)
         let url = `${base}/channels/${channelId}`
         let headers = Object.assign(auth, contentType)
         let response = await axios.delete(url, {
